@@ -4,20 +4,28 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="create-table-product" author="Igor">
+    <changeSet id="create-table-customer" author="Igor">
 
-        <createTable tableName="product">
+        <createTable tableName="customer">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="title" type="varchar(64)">
+            <column name="Имя" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="Фамилия" type="varchar(64)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="email" type="varchar(64)">
                 <constraints nullable="false" unique="true"/>
             </column>
 
-            <column name="price" type="decimal(7,2)">
-                <constraints nullable="false"/>
+            <column name="phone_number" type="varchar(17)">
+                <constraints nullable="false" unique="true"/>
             </column>
 
             <column name="active" type="boolean">
