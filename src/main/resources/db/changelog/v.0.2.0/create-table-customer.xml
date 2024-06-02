@@ -8,29 +8,29 @@
 
         <createTable tableName="customer">
 
-            <column name="id" type="bigint" autoIncrement="true">
-                <constraints primaryKey="true"/>
-            </column>
+<!--            <column name="id" type="bigint" autoIncrement="true">-->
+<!--                <constraints primaryKey="true"/>-->
+<!--            </column>-->
 
-            <column name="Имя" type="varchar(64)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="vorname" type="varchar(64)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="Фамилия" type="varchar(64)">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="nachname" type="varchar(64)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
-            <column name="email" type="varchar(64)">
-                <constraints nullable="false" unique="true"/>
-            </column>
+<!--            <column name="email" type="varchar(64)">-->
+<!--                <constraints nullable="false" unique="true"/>-->
+<!--            </column>-->
 
-            <column name="phone_number" type="varchar(17)">
-                <constraints nullable="false" unique="true"/>
-            </column>
+<!--            <column name="telefon" type="varchar(17)">-->
+<!--                <constraints nullable="false" unique="true"/>-->
+<!--            </column>-->
 
-            <column name="active" type="boolean">
-                <constraints nullable="false"/>
-            </column>
+<!--            <column name="active" type="boolean">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
 
         </createTable>
 
