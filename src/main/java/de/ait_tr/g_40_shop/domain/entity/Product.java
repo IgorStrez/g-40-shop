@@ -1,4 +1,4 @@
-package de.ait_tr.g_40_shop.domen.entity;
+package de.ait_tr.g_40_shop.domain.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,6 +9,38 @@ public class Product {
     private String title;
     private BigDecimal price;
     private boolean active;
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
     @Override
     public boolean equals(Object o) {
