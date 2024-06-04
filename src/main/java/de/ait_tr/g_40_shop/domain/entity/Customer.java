@@ -1,17 +1,26 @@
 package de.ait_tr.g_40_shop.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.util.Objects;
 
+@Entity
+@Table(name = "customer")
 public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "active")
     private boolean active;
 
+    private Cart cart;
 
-    // Геттеры и сеттеры
     public Long getId() {
         return id;
     }
@@ -36,23 +45,30 @@ public class Customer {
         this.active = active;
     }
 
-    // Переопределение методов equals, hashCode и toString
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name);
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, active);
+        return Objects.hash(id, name, active, cart);
     }
 
     @Override
     public String toString() {
-        return String.format("Customer: id - %d, name - %s, active - %s",
-                id, name, active ? "yes" : "no");
+        return String.format("Customer: id - %d, name - %s, active - %s, cart - %s",
+                id, name, active ? "yes" : "no", cart == null ? "ERROR! Cart is missing" : cart);
     }
 }

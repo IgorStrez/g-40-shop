@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
-    private CustomerService service;
+    private final CustomerService service;
 
     public CustomerController(CustomerService service) {
         this.service = service;
@@ -26,7 +26,8 @@ public class CustomerController {
         if (id == null) {
             return service.getAllActiveCustomers();
         } else {
-            return List.of(service.getById(id));
+            Customer customer = service.getById(id);
+            return customer == null ? null : List.of(customer);
         }
     }
 

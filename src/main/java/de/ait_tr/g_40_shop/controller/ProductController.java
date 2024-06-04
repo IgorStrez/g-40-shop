@@ -32,7 +32,8 @@ public class ProductController {
         if (id== null) {
             return service.getAllActiveProducts();
         } else {
-           return List.of(service.getById(id));
+           Product product = service.getById(id);
+           return product == null ? null : List.of(product);
         }
     }
 
