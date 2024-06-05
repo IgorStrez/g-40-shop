@@ -1,6 +1,6 @@
 package de.ait_tr.g_40_shop.controller;
 
-import de.ait_tr.g_40_shop.domain.entity.Product;
+import de.ait_tr.g_40_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class ProductController {
     // Create product - POST - localhost:8080/products
 
     @PostMapping
-    public Product save(@RequestBody Product product) {
+    public ProductDto save(@RequestBody ProductDto product) {
         //TODO обращение к сервису
         return service.save(product);
     }
@@ -28,11 +28,11 @@ public class ProductController {
     // Get product - GET - localhost:8080/products
 
     @GetMapping
-    public List<Product> get(@RequestParam(required = false) Long id) {
+    public List<ProductDto> get(@RequestParam(required = false) Long id) {
         if (id== null) {
             return service.getAllActiveProducts();
         } else {
-           Product product = service.getById(id);
+           ProductDto product = service.getById(id);
            return product == null ? null : List.of(product);
         }
     }
@@ -40,7 +40,7 @@ public class ProductController {
     // Update product - PUT - localhost:8080/products
 
     @PutMapping
-    public Product update(@RequestBody Product product) {
+    public ProductDto update(@RequestBody ProductDto product) {
        return service.update(product);
     }
 
@@ -80,18 +80,4 @@ public class ProductController {
     }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
