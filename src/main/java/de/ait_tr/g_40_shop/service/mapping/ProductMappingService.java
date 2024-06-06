@@ -11,6 +11,7 @@ public interface ProductMappingService {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "active", constant = "true")
     Product mapDtoToEntity(ProductDto dto);
+
     ProductDto mapEntityToDto(Product entity);
 
 //    public Product mapDtoToEntity(ProductDto dto) {
@@ -28,5 +29,4 @@ public interface ProductMappingService {
 //        dto.setPrice(entity.getPrice());
 //        return dto;
 //    }
-
 }

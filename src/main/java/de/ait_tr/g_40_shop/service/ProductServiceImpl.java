@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
     private final ProductRepository repository;
     private final ProductMappingService mappingService;
 
@@ -29,15 +30,33 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
-        return repository.findAll().stream().filter(Product::isActive).map(mappingService::mapEntityToDto).toList();
+        return repository.findAll()
+                .stream()
+                .filter(Product::isActive)
+//                .map(x -> mappingService.mapEntityToDto(x))
+                .map(mappingService::mapEntityToDto)
+                .toList();
+
+//        List<Product> products = repository.findAll();
+//        Iterator<Product> iterator = products.iterator();
+//
+//        while (iterator.hasNext()) {
+//            if (!iterator.next().isActive()) {
+//                iterator.remove();
+//            }
+//        }
+//
+//        return products;
     }
 
     @Override
     public ProductDto getById(Long id) {
         Product product = repository.findById(id).orElse(null);
+
         if (product == null || !product.isActive()) {
             return null;
         }
+
         return mappingService.mapEntityToDto(product);
     }
 
