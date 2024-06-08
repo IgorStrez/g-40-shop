@@ -1,4 +1,4 @@
-package de.ait_tr.g_40_shop.security.config;
+package de.ait_tr.g_40_shop.security.sec_config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

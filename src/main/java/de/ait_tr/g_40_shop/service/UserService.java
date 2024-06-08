@@ -24,8 +24,7 @@ public class UserService implements UserDetailsService {
 //                        String.format("User %s not found", username)));
 
         // Альтернативный вариант
-        User user = repository.findByUsername(username);
-
+        User user = repository.findByUsername(username).orElse(null);//
         if (user == null) {
             throw new UsernameNotFoundException(
                     String.format("User %s not found", username));

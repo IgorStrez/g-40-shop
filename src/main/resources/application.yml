@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/g_40_shop
     username: postgres
-    password: ppp77777
+    password: qwerty007
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
@@ -12,3 +12,7 @@ spring:
     properties:
       hibernate:
         auto_quote_keyword: true
+
+Key:
+  access: Sf2/MZFPvvbKmQufF/XJ23MOpIV6cJysnEaQ7veRATU=
+  refresh: N8VjRs2JtsJJpyB887zFbD4qye9loQxKx5iZ418V1Xs=
