@@ -2,7 +2,7 @@ package de.ait_tr.g_40_shop.security.sec_service;
 
 import de.ait_tr.g_40_shop.domain.entity.User;
 import de.ait_tr.g_40_shop.security.sec_dto.TokenResponseDto;
-import de.ait_tr.g_40_shop.service.UserService;
+import de.ait_tr.g_40_shop.service.interfaces.UserService;
 import io.jsonwebtoken.Claims;
 import jakarta.security.auth.message.AuthException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

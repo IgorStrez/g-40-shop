@@ -36,14 +36,16 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(x -> x
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults())
+                .httpBasic(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(x -> x
-//                        .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
-//                        .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "USER")
-//                        .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/products/all").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/products").hasAnyRole("ADMIN", "USER")
+                                .requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/auth/login", "/auth/refresh").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/hello").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/register").permitAll()
 
-                        .anyRequest().permitAll()
+//                        .anyRequest().permitAll()
                 )
                 .addFilterAfter(filter, UsernamePasswordAuthenticationFilter.class)
                 .build();
