@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.Set;
@@ -34,6 +35,26 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "active")
     private boolean active;
+    @Column(name = "activation_code")
+    private String activationCode;
+    @Column(name = "activation_expiry")
+    private LocalDateTime activationExpiry;
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public LocalDateTime getActivationExpiry() {
+        return activationExpiry;
+    }
+
+    public void setActivationExpiry(LocalDateTime activationExpiry) {
+        this.activationExpiry = activationExpiry;
+    }
 
     public Long getId() {
         return id;
@@ -95,12 +116,12 @@ public class User implements UserDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return active == user.active && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email);
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password) && Objects.equals(roles, user.roles) && Objects.equals(email, user.email) && Objects.equals(activationCode, user.activationCode) && Objects.equals(activationExpiry, user.activationExpiry);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, username, password, roles, email, active);
+        return Objects.hash(id, username, password, roles, email, active, activationCode, activationExpiry);
     }
 
     @Override

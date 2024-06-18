@@ -13,6 +13,7 @@ spring:
       hibernate:
         auto_quote_keyword: true
 
+
 Key:
   access: Sf2/MZFPvvbKmQufF/XJ23MOpIV6cJysnEaQ7veRATU=
   refresh: N8VjRs2JtsJJpyB887zFbD4qye9loQxKx5iZ418V1Xs=

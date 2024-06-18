@@ -1,6 +1,7 @@
 package de.ait_tr.g_40_shop.service.mapping;
 
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
+import de.ait_tr.g_40_shop.domain.dto.ProductSupplyDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -13,6 +14,8 @@ public interface ProductMappingService {
     Product mapDtoToEntity(ProductDto dto);
 
     ProductDto mapEntityToDto(Product entity);
+
+    ProductSupplyDto mapEntityToSupplyDto(Product entity);
 
 //    public Product mapDtoToEntity(ProductDto dto) {
 //        Product entity = new Product();

@@ -10,7 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,7 +55,31 @@ public class UserServiceImpl implements UserService {
         user.setActive(false);
         user.setRoles(Set.of(roleService.getRoleUser()));
 
+        // Генерация кода активации и установка времени истечения
+        String activationCode = UUID.randomUUID().toString();
+        user.setActivationCode(activationCode);
+        user.setActivationExpiry(LocalDateTime.now().plusHours(24));
+
         repository.save(user);
         emailService.sendConfirmationEmail(user);
+    }
+
+    @Override
+    public boolean activateUser(String activationCode) {
+        Optional<User> userOptional = repository.findByActivationCode(activationCode);
+        if (userOptional.isEmpty()) {
+            return false;
+        }
+
+        User user = userOptional.get();
+        if (user.getActivationExpiry().isBefore(LocalDateTime.now())) {
+            return false;
+        }
+
+        user.setActive(true);
+        user.setActivationCode(null);
+        user.setActivationExpiry(null);
+        repository.save(user);
+        return true;
     }
 }

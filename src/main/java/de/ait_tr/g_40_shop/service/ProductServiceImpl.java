@@ -1,17 +1,17 @@
 package de.ait_tr.g_40_shop.service;
 
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
+import de.ait_tr.g_40_shop.domain.dto.ProductSupplyDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.FirstTestException;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.FourthTestException;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.SecondTestException;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.ThirdTestException;
+import de.ait_tr.g_40_shop.exception_handling.exceptions.*;
 import de.ait_tr.g_40_shop.repository.ProductRepository;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_shop.service.mapping.ProductMappingService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -113,5 +113,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public BigDecimal getActiveProductsAveragePrice() {
         return null;
+    }
+
+    @Override
+    @Transactional
+    public void attachImage(String imageUrl, String productTitle) {
+        Product product = repository.findByTitle(productTitle).orElseThrow(
+                () -> new ProductNotFoundException(productTitle)
+        );
+
+        product.setImage(imageUrl);
+    }
+
+    @Override
+    public List<ProductSupplyDto> getProductsForSupply() {
+        return repository.findAll()
+                .stream()
+                .filter(Product::isActive)
+                .map(mappingService::mapEntityToSupplyDto)
+                .toList();
     }
 }
