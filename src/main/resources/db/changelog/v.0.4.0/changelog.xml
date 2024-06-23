@@ -8,9 +8,6 @@
         <tagDatabase tag="v.0.4.0"/>
     </changeSet>
 
-    <include file="create-table-confirm-code.xml" relativeToChangelogFile="true"/>
-    <include file="create-foreign-key-confirm-code-to-user.xml" relativeToChangelogFile="true"/>
-    <include file="add-columns-email-active-to-user.xml" relativeToChangelogFile="true"/>
-
+    <include file="add-column-image-to-product.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -1,7 +1,5 @@
 package de.ait_tr.g_40_shop.exception_handling;
 
-import de.ait_tr.g_40_shop.exception_handling.exceptions.FirstTestException;
-
 import java.util.Objects;
 
 public class Response {

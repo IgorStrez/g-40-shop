@@ -1,17 +1,22 @@
 package de.ait_tr.g_40_shop.service;
 
 import de.ait_tr.g_40_shop.domain.dto.CustomerDto;
+import de.ait_tr.g_40_shop.domain.entity.Cart;
 import de.ait_tr.g_40_shop.domain.entity.Customer;
+import de.ait_tr.g_40_shop.exception_handling.exceptions.CustomerInactiveException;
+import de.ait_tr.g_40_shop.exception_handling.exceptions.CustomerNotFoundException;
 import de.ait_tr.g_40_shop.repository.CustomerRepository;
 import de.ait_tr.g_40_shop.service.interfaces.CustomerService;
 import de.ait_tr.g_40_shop.service.mapping.CustomerMappingService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
     private final CustomerRepository repository;
     private final CustomerMappingService mappingService;
 
@@ -23,27 +28,47 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerDto save(CustomerDto dto) {
         Customer entity = mappingService.mapDtoToEntity(dto);
+
+        Cart cart = new Cart();
+        entity.setCart(cart);
+        cart.setCustomer(entity);
+
         repository.save(entity);
         return mappingService.mapEntityToDto(entity);
     }
 
     @Override
     public List<CustomerDto> getAllActiveCustomers() {
-        return repository.findAll().stream().filter(Customer::isActive).map(mappingService::mapEntityToDto).toList();
+        return repository.findAll()
+                .stream()
+                .filter(Customer::isActive)
+                .map(mappingService::mapEntityToDto)
+                .toList();
     }
 
     @Override
-    public CustomerDto getById(Long id) {
-        Customer customer = repository.findById(id).orElse(null);
-        if (customer == null || !customer.isActive()) {
-            return null;
+    public CustomerDto getActiveCustomerById(Long id) {
+        Customer customer = repository.findById(id).orElseThrow(
+                () -> new CustomerNotFoundException(id)
+        );
+
+        if (!customer.isActive()) {
+            throw new CustomerInactiveException(id);
         }
+
         return mappingService.mapEntityToDto(customer);
     }
 
     @Override
-    public CustomerDto update(CustomerDto customer) {
-        return null;
+    @Transactional
+    public CustomerDto update(CustomerDto dto) {
+        Long id = dto.getId();
+        Customer customer = repository.findById(id).orElseThrow(
+                () -> new CustomerNotFoundException(id)
+        );
+
+        customer.setName(dto.getName());
+        return mappingService.mapEntityToDto(customer);
     }
 
     @Override
@@ -62,27 +87,27 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public long getActiveCustomersQuantity() {
+    public long getActiveCustomersNumber() {
         return 0;
     }
 
     @Override
-    public BigDecimal getCartTotalPrice(Long customerId) {
+    public BigDecimal getCartTotalCost(Long customerId) {
         return null;
     }
 
     @Override
-    public BigDecimal getCartAveragePrice(Long customerId) {
+    public BigDecimal getAverageProductCost(Long customerId) {
         return null;
     }
 
     @Override
-    public void addProductToCart(Long customerId, Long productId) {
+    public void addProductToCustomersCart(Long customerId, Long productId) {
 
     }
 
     @Override
-    public void removeProductFromCart(Long customerId, Long productId) {
+    public void removeProductFromCustomersCart(Long customerId, Long productId) {
 
     }
 

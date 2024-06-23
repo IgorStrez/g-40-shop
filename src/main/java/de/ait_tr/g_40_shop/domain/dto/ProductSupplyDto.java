@@ -1,13 +1,12 @@
 package de.ait_tr.g_40_shop.domain.dto;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductSupplyDto {
+
     private Long id;
     private String title;
     private int quantity;
-
 
     public Long getId() {
         return id;

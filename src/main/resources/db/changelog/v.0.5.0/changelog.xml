@@ -8,8 +8,7 @@
         <tagDatabase tag="v.0.5.0"/>
     </changeSet>
 
-    <include file="add-column-image-to-product.xml" relativeToChangelogFile="true"/>
-
-
+    <include file="add-column-quantity-to-product.xml" relativeToChangelogFile="true"/>
+    <include file="add-role-supplier.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

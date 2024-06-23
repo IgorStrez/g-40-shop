@@ -12,11 +12,14 @@ public class ConfirmationCode {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private  Long id;
+    private Long id;
+
     @Column(name = "code")
     private String code;
+
     @Column(name = "expired")
     private LocalDateTime expired;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

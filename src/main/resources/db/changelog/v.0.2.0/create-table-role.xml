@@ -4,26 +4,20 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="create-table-confirm-code" author="Igor">
-        <createTable tableName="confirm_code">
+    <changeSet id="create-table-role" author="Igor">
+
+        <createTable tableName="role">
 
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
 
-            <column name="code" type="char(36)">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="user_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-
-            <column name="expired" type="datetime">
-                <constraints nullable="false"/>
+            <column name="title" type="varchar(64)">
+                <constraints nullable="false" unique="true"/>
             </column>
 
         </createTable>
+
     </changeSet>
 
 </databaseChangeLog>

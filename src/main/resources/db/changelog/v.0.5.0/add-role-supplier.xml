@@ -4,15 +4,12 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="add-column-image-to-product" author="Igor">
+    <changeSet id="add-role-supplier" author="Igor">
 
-        <addColumn tableName="product">
-            <column name="image" type="varchar(128)">
-                <constraints nullable="true"/>
-            </column>
-        </addColumn>
+        <insert tableName="role">
+            <column name="title" value="ROLE_SUPPLIER"/>
+        </insert>
 
     </changeSet>
-
 
 </databaseChangeLog>

@@ -20,5 +20,4 @@ public interface ProductService {
     BigDecimal getActiveProductsAveragePrice();
     void attachImage(String imageUrl, String productTitle);
     List<ProductSupplyDto> getProductsForSupply();
-
 }

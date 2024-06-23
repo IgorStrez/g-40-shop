@@ -8,5 +8,4 @@ import java.util.Optional;
 public interface ConfirmationCodeRepository extends JpaRepository<ConfirmationCode, Long> {
 
     Optional<ConfirmationCode> findByCode(String code);
-
 }

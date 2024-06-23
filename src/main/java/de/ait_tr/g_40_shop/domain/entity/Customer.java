@@ -19,7 +19,16 @@ public class Customer {
     @Column(name = "active")
     private boolean active;
 
-//    private Cart cart;
+    @OneToOne(mappedBy = "customer", cascade = CascadeType.ALL)
+    private Cart cart;
+
+    public Cart getCart() {
+        return cart;
+    }
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
 
     public Long getId() {
         return id;
@@ -45,30 +54,22 @@ public class Customer {
         this.active = active;
     }
 
-//    public Cart getCart() {
-//        return cart;
-//    }
-//
-//    public void setCart(Cart cart) {
-//        this.cart = cart;
-//    }
-//
-//    @Override
-//    public boolean equals(Object o) {
-//        if (this == o) return true;
-//        if (o == null || getClass() != o.getClass()) return false;
-//        Customer customer = (Customer) o;
-//        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
-//    }
-//
-//    @Override
-//    public int hashCode() {
-//        return Objects.hash(id, name, active, cart);
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return String.format("Customer: id - %d, name - %s, active - %s, cart - %s",
-//                id, name, active ? "yes" : "no", cart == null ? "ERROR! Cart is missing" : cart);
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Customer customer = (Customer) o;
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(name, customer.name) && Objects.equals(cart, customer.cart);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, active, cart);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Customer: id - %d, name - %s, active - %s, cart - %s",
+                id, name, active ? "yes" : "no", cart == null ? "ERROR! Cart is missing" : cart);
+    }
 }

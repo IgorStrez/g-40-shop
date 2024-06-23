@@ -14,7 +14,6 @@ public class SystemController {
 
     private final ProductService productService;
 
-
     public SystemController(ProductService productService) {
         this.productService = productService;
     }
@@ -23,5 +22,4 @@ public class SystemController {
     public List<ProductSupplyDto> getAllProducts() {
         return productService.getProductsForSupply();
     }
-
 }

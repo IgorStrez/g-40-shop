@@ -17,19 +17,29 @@ public class Product {
 
     // Название должно быть длиной хотя бы 3 символа
     // Название должно начинаться с заглавной буквы
-    // Остальные буквы в названии должны быть строчными Латинскими (разрешаются пробелы)
-    // Без цифр и символов
+    // Остальные буквы в названии должны быть строчными латинскими (разрешаются пробелы)
+    // Название не должно содержать цифры и служебные символы
     // Название не должно быть null
+    // Banana - V
+    // Ba - X
+    // banana - X
+    // BANANA - X
+    // BananA - X
+    // Banana7 - X
+    // Banana# - X
 
     @NotNull(message = "Product title cannot be null")
     @NotBlank(message = "Product title cannot be empty")
     @Pattern(
-            regexp = "[A-Z][a-z ]{2,31}",
-            message = "Product title should be at least 3 character and start with capital letter"
+            regexp = "[A-Z][a-z ]{2,}",
+            message = "Product title should be at least 3 character length " +
+                    "and start with capital letter"
     )
     @Column(name = "title")
     private String title;
 
+//    @Min(5)
+//    @Max(100000)
     @DecimalMin(
             value = "5.00",
             message = "Product price should be greater or equal than 5.00"
@@ -47,6 +57,7 @@ public class Product {
 
     @Column(name = "image")
     private String image;
+
     @Column(name = "quantity")
     private int quantity;
 
@@ -56,6 +67,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Long getId() {
@@ -88,14 +107,6 @@ public class Product {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
     }
 
     @Override

@@ -97,10 +97,14 @@ public class ProductController {
         return service.getActiveProductsAveragePrice();
     }
 
+    // 1 способ обработки исключений
+    // ПЛЮС -  точечно настраиваем обработчик ошибок именно для данного контроллера,
+    //         если нам требуется разная логика обработки исключений в разных контроллерах
+    // МИНУС - если нам не требуется разная логика для разных контроллеров,
+    //         придётся создавать такие одинаковые обработчики в каждом контроллере
     @ExceptionHandler(FirstTestException.class)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Response handleException(FirstTestException e) {
         return new Response(e.getMessage());
     }
-
 }

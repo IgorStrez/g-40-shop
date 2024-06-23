@@ -2,10 +2,13 @@ package de.ait_tr.g_40_shop.domain.entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-//@Entity
+@Entity
 @Table(name = "cart")
 public class Cart {
 
@@ -14,8 +17,61 @@ public class Cart {
     @Column(name = "id")
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @ManyToMany
+    @JoinTable(
+            name = "cart_product",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
     private List<Product> products;
+
+    public void addProduct(Product product) {
+        if (product.isActive()) {
+            products.add(product);
+        }
+    }
+
+    public List<Product> getAllActiveProducts() {
+        return products.stream()
+                .filter(Product::isActive)
+                .toList();
+    }
+
+    public void removeProductById(Long id) {
+        Iterator<Product> iterator = products.iterator();
+        while (iterator.hasNext()) {
+            if (iterator.next().getId().equals(id)) {
+                iterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void clear() {
+        products.clear();
+    }
+
+    public BigDecimal getCartTotalCost() {
+        return products.stream()
+                .filter(Product::isActive)
+                .map(Product::getPrice)
+                .reduce(BigDecimal::add)
+                .orElse(BigDecimal.ZERO);
+    }
+
+    public BigDecimal getAverageProductCost() {
+        long count = products.stream()
+                .filter(Product::isActive)
+                .count();
+
+        return count == 0 ?
+                BigDecimal.ZERO :
+                getCartTotalCost().divide(new BigDecimal(count), RoundingMode.DOWN);
+    }
 
     public Long getId() {
         return id;

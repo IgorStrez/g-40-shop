@@ -4,19 +4,23 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
-    <changeSet id="add-columns-email-active-to-user" author="Igor">
+    <changeSet id="create-table-user-role" author="Igor">
 
-        <addColumn tableName="user">
-            <column name="email" type="varchar(64)" defaultValue="default">
+        <createTable tableName="user_role">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="user_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-        </addColumn>
 
-        <addColumn tableName="user">
-            <column name="active" type="boolean" defaultValue="false">
+            <column name="role_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
-        </addColumn>
+
+        </createTable>
 
     </changeSet>
 

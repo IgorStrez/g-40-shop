@@ -12,7 +12,6 @@ spring:
     properties:
       hibernate:
         auto_quote_keyword: true
-
   mail:
     username: theatermavrodi@gmail.com
     password: sqhowduykdronlsf

@@ -94,7 +94,7 @@ public class AspectLogging {
         try {
             result = ((List<ProductDto>) joinPoint.proceed())
                     .stream()
-                    .filter(x -> x.getPrice().intValue() > 0)
+                    .filter(x -> x.getPrice().intValue() > 100)
                     .toList();
         } catch (Throwable e) {
             logger.error("Method getAllActiveProducts of the class ProductServiceImpl threw an exception: {}", e.getMessage());

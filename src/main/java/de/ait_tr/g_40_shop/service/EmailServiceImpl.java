@@ -1,19 +1,19 @@
 package de.ait_tr.g_40_shop.service;
 
 import de.ait_tr.g_40_shop.domain.entity.User;
-import de.ait_tr.g_40_shop.service.interfaces.EmailService;
 import de.ait_tr.g_40_shop.service.interfaces.ConfirmationService;
+import de.ait_tr.g_40_shop.service.interfaces.EmailService;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,12 +23,6 @@ public class EmailServiceImpl implements EmailService {
     private final JavaMailSender sender;
     private final Configuration mailConfig;
     private final ConfirmationService confirmationService;
-
-    @Value("${app.email.from}")
-    private String from;
-
-    @Value("${app.activation.url}")
-    private String activationUrl;
 
     public EmailServiceImpl(JavaMailSender sender, Configuration mailConfig, ConfirmationService confirmationService) {
         this.sender = sender;
@@ -43,14 +37,15 @@ public class EmailServiceImpl implements EmailService {
     // Отправка письма
     @Override
     public void sendConfirmationEmail(User user) {
+
         MimeMessage message = sender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
         String text = generateConfirmationMail(user);
 
         try {
-            helper.setFrom(from);
+            helper.setFrom("ait.andrey.mailer@gmail.com");
             helper.setTo(user.getEmail());
-            helper.setSubject("Account Activation");
+            helper.setSubject("Registration");
             helper.setText(text, true);
             sender.send(message);
         } catch (MessagingException e) {
@@ -64,8 +59,11 @@ public class EmailServiceImpl implements EmailService {
             Template template = mailConfig.getTemplate("confirm_mail.ftlh");
             String code = confirmationService.generateConfirmationCode(user);
 
-            // GET -> http://localhost:8080/register/activate?code=fsf787fs-fsfvsdff-rwdfsf
-            String url = activationUrl + "?code=" + code;
+            // GET -> http://localhost:8080/register?code=fsf787fs-fsfvsdff-rwdfsf
+            String url = "http://localhost:8080/register?code=" + code;
+
+            // name -> Vasya
+            // link -> http://localhost:8080/...
 
             Map<String, Object> templateMap = new HashMap<>();
             templateMap.put("name", user.getUsername());
