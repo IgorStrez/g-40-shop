@@ -73,19 +73,26 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void deleteById(Long id) {
-
+        repository.deleteById(id);
     }
+
 
     @Override
     public void deleteByName(String name) {
-
+        Customer customer = repository.findByName(name);
+        if (customer != null) {
+            repository.delete(customer);
+        }
     }
 
     @Override
     public void restoreById(Long id) {
-
+        Customer customer = repository.findById(id).orElse(null);
+        if (customer != null && customer.isDeleted()) {
+            customer.setDeleted(false);
+            repository.save(customer);
+        }
     }
-
     @Override
     public long getActiveCustomersNumber() {
         return 0;

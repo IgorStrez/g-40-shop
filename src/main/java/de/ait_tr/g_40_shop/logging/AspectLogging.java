@@ -103,4 +103,49 @@ public class AspectLogging {
         logger.info("Method getAllActiveProducts of the class ProductServiceImpl finished its work with result: {}", result);
         return result;
     }
+
+
+
+    // Homework
+
+    @Pointcut("within(*..*Service*)")
+    public void allServicesMethods() {}
+
+    @Before("allServicesMethods()")
+    public void beforeAllServicesMethods(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        Object[] args = joinPoint.getArgs();
+        logger.info("Method {} of the class {} called with parameters: {}",
+                methodName, className, args);
+    }
+
+    @After("allServicesMethods()")
+    public void afterAllServicesMethods(JoinPoint joinPoint) {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        logger.info("Method {} of the class {} finished its work", methodName, className);
+    }
+
+    @AfterReturning(
+            pointcut = "allServicesMethods()",
+            returning = "result"
+    )
+    public void afterReturningAllServicesMethods(JoinPoint joinPoint, Object result) {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        logger.info("Method {} of the class {} successfully returned result: {}",
+                methodName, className, result);
+    }
+
+    @AfterThrowing(
+            pointcut = "allServicesMethods()",
+            throwing = "e"
+    )
+    public void afterThrowingAllServicesMethods(JoinPoint joinPoint, Exception e) {
+        String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        logger.info("Method {} of the class {} threw an exception: {}",
+                methodName, className, e.getMessage());
+    }
 }

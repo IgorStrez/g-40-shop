@@ -36,7 +36,8 @@ public class Cart {
     }
 
     public List<Product> getAllActiveProducts() {
-        return products.stream()
+        return products
+                .stream()
                 .filter(Product::isActive)
                 .toList();
     }
@@ -56,7 +57,8 @@ public class Cart {
     }
 
     public BigDecimal getCartTotalCost() {
-        return products.stream()
+        return products
+                .stream()
                 .filter(Product::isActive)
                 .map(Product::getPrice)
                 .reduce(BigDecimal::add)

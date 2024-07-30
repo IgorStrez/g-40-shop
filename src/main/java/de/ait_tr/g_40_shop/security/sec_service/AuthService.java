@@ -1,6 +1,7 @@
 package de.ait_tr.g_40_shop.security.sec_service;
 
 import de.ait_tr.g_40_shop.domain.entity.User;
+import de.ait_tr.g_40_shop.exception_handling.exceptions.ConfirmationFailedException;
 import de.ait_tr.g_40_shop.security.sec_dto.TokenResponseDto;
 import de.ait_tr.g_40_shop.service.interfaces.UserService;
 import io.jsonwebtoken.Claims;
@@ -29,6 +30,10 @@ public class AuthService {
     public TokenResponseDto login(User inboundUser) throws AuthException {
         String username = inboundUser.getUsername();
         User foundUser = (User) userService.loadUserByUsername(username);
+
+        if (!foundUser.isActive()) {
+            throw new ConfirmationFailedException("Your registration is not confirmed");
+        }
 
         if (passwordEncoder.matches(inboundUser.getPassword(), foundUser.getPassword())) {
             String accessToken = tokenService.generateAccessToken(foundUser);

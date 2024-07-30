@@ -72,4 +72,15 @@ public class Customer {
         return String.format("Customer: id - %d, name - %s, active - %s, cart - %s",
                 id, name, active ? "yes" : "no", cart == null ? "ERROR! Cart is missing" : cart);
     }
+
+    private boolean deleted;
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
 }

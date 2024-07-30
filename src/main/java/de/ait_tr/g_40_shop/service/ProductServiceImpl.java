@@ -3,9 +3,7 @@ package de.ait_tr.g_40_shop.service;
 import de.ait_tr.g_40_shop.domain.dto.ProductDto;
 import de.ait_tr.g_40_shop.domain.dto.ProductSupplyDto;
 import de.ait_tr.g_40_shop.domain.entity.Product;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.FourthTestException;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.ProductNotFoundException;
-import de.ait_tr.g_40_shop.exception_handling.exceptions.ThirdTestException;
+import de.ait_tr.g_40_shop.exception_handling.exceptions.*;
 import de.ait_tr.g_40_shop.repository.ProductRepository;
 import de.ait_tr.g_40_shop.service.interfaces.ProductService;
 import de.ait_tr.g_40_shop.service.mapping.ProductMappingService;
@@ -37,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
         try {
             repository.save(entity);
         } catch (Exception e) {
-            throw new FourthTestException(e.getMessage());
+            throw new SavingProductException(String.format("Error while saving product: %s", entity), e);
         }
 
         return mappingService.mapEntityToDto(entity);
@@ -45,23 +43,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDto> getAllActiveProducts() {
-        return repository.findAll()
+        List<ProductDto> products = repository.findAll()
                 .stream()
                 .filter(Product::isActive)
-//                .map(x -> mappingService.mapEntityToDto(x))
                 .map(mappingService::mapEntityToDto)
                 .toList();
 
-//        List<Product> products = repository.findAll();
-//        Iterator<Product> iterator = products.iterator();
-//
-//        while (iterator.hasNext()) {
-//            if (!iterator.next().isActive()) {
-//                iterator.remove();
-//            }
-//        }
-//
-//        return products;
+        if (products.isEmpty()) {
+            throw new NoActiveProductsException("There are no active products in the database");
+        }
+
+        return products;
     }
 
 //    @Override
@@ -128,21 +120,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    @Transactional
     public void attachImage(String imageUrl, String productTitle) {
-        Product product = repository.findByTitle(productTitle).orElseThrow(
-                () -> new ProductNotFoundException(productTitle)
-        );
 
-        product.setImage(imageUrl);
     }
 
     @Override
     public List<ProductSupplyDto> getProductsForSupply() {
-        return repository.findAll()
-                .stream()
-                .filter(Product::isActive)
-                .map(mappingService::mapEntityToSupplyDto)
-                .toList();
+        return null;
     }
+
 }
